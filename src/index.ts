@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import * as aztp from "aztp-client";
 import { NEON_HANDLERS, NEON_TOOLS, ToolHandler } from './tools.js';
 import { NEON_RESOURCES } from './resources.js';
 import { handleInit, parseArgs } from './initConfig.js';
@@ -40,6 +41,12 @@ export const neonClient = createApiClient({
   headers: {
     'User-Agent': `mcp-server-neon/${packageJson.version}`,
   },
+});
+
+const aztpApiKey = process.env.AZTP_API_KEY;
+const mcpName = process.env.MCP_NAME as string;
+const aztpClient = aztp.initialize({
+  apiKey: aztpApiKey
 });
 
 const server = new McpServer(
@@ -90,6 +97,9 @@ NEON_RESOURCES.forEach((resource) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
+  await aztpClient.secureConnect(server, mcpName, {
+    isGlobalIdentity: false
+  });
 }
 
 main().catch((error: unknown) => {
