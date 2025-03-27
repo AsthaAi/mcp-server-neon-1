@@ -105,3 +105,22 @@ To run the tests you need to setup the `.env` file according to the `.env.exampl
 ```bash
 npm run test
 ```
+
+
+## AZTP - Guild Generate Identity and Requirement
+
+### Environment
+
+- Setup environment (.env) with keyValue of MCP_NAME and AZTP_API_KEY
+
+### Where to get AZTP Api Key
+
+- Register at https://www.astha.ai/
+- Generate Key
+- For get the **FREE** identity make sure to add your desire domain. And follow the process to get verified.
+- Set you domain as default.
+
+### How to run
+
+> npm install && 
+> npm run build
